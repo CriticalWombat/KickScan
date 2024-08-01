@@ -1,0 +1,10 @@
+#!/bin/bash
+
+curl -o /tmp/rl9.iso https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.4-x86_64-boot.iso
+mkdir /mnt/iso
+mkdir /tmp/working_directory
+mount -o loop /tmp/rl9.iso /mnt/iso
+rsync -av /mnt/iso/* /tmp/working_directory
+umount /mnt/iso
+curl -o /tmp/working_directory/ks.cfg https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/ks.cfg
+mkisofs -o /tmp/new-rocky-linux.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J -v -T -V "Rocky-9-4-x86_64-dvd" /tmp/working_directory
