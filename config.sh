@@ -20,10 +20,10 @@ yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker
 yum clean all
 
 #docker ops
-systemctl enable docker
-systemctl start docker
-curl -o /home/nexigen/greenbone/compose.yaml https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/compose.yaml
-cd /home/nexigen/greenbone
+systemctl enable docker && \
+systemctl start docker && \
+curl -o /home/nexigen/greenbone/compose.yaml https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/compose.yaml && \
+cd /home/nexigen/greenbone && \
 docker compose up -d
 
 # ssh ops
