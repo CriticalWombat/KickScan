@@ -1,0 +1,81 @@
+#!/bin/bash
+
+set -e
+
+# List of required packages
+REQUIRED_PACKAGES=("curl" "rsync" "genisoimage")
+
+# Function to handle cleanup on exit
+cleanup() {
+    echo "Cleaning up..."
+    umount /tmp/iso || true
+    rm -rf /tmp/iso
+    rm -rf /tmp/working_directory
+    rm -rf /tmp/rl9.iso
+}
+trap cleanup EXIT
+
+# Function to handle errors
+error_exit() {
+    echo "Error: $1"
+    exit 1
+}
+
+if [ -f /etc/debian_version ]; then
+    # Check and install required packages
+    for PACKAGE in "${REQUIRED_PACKAGES[@]}"; do
+        if ! dpkg -s $PACKAGE &> /dev/null; then
+            echo "$PACKAGE not found. Installing..."
+            sudo apt-get update || error_exit "Failed to update package list."
+            sudo apt-get install -y $PACKAGE || error_exit "Failed to install $PACKAGE."
+        else
+            echo "$PACKAGE is already installed."
+        fi
+    done
+elif [ -f /etc/redhat-release ]; then
+        # Check and install required packages
+        for PACKAGE in "${REQUIRED_PACKAGES[@]}"; do
+            if ! rpm -q $PACKAGE &> /dev/null; then
+            echo "$PACKAGE not found. Installing..."
+            sudo yum -y install $PACKAGE || error_exit "Failed to install $PACKAGE."
+        else
+            echo "$PACKAGE is already installed."
+            fi
+        done
+else
+    error_exit "Unknown OS"
+fi
+
+
+
+# Download the ISO file
+echo ""
+echo "Downloading iso from rockylinux.org"
+curl -o /tmp/rl9.iso https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.4-x86_64-minimal.iso || error_exit "Failed to download ISO."
+echo ""
+
+# Create directories
+mkdir -p /tmp/iso || error_exit "Failed to create /tmp/iso directory."
+mkdir -p /tmp/working_directory || error_exit "Failed to create /tmp/working_directory directory."
+
+# Mount the ISO
+mount -o loop /tmp/rl9.iso /tmp/iso || error_exit "Failed to mount ISO."
+
+# Synchronize files
+rsync -av /tmp/iso/ /tmp/working_directory || error_exit "Failed to synchronize files."
+
+# Unmount the ISO
+umount /tmp/iso || error_exit "Failed to unmount ISO."
+
+# Download the isolinux configuration file
+curl https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/iso-configs/isolinux.cfg > /tmp/working_directory/isolinux/isolinux.cfg || error_exit "Failed to download isolinux.cfg."
+
+# Create the new ISO
+mkisofs -o /tmp/GreenBoneScanner.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J -v -T -V "Rocky-9-4-x86_64-dvd" /tmp/working_directory || error_exit "Failed to create ISO."
+
+echo "ISO creation successful. File saved as /tmp/GreenBoneScanner.iso"
+
+# Housekeeping
+rm -rf /tmp/iso
+rm -rf /tmp/working_directory
+rm -rf /tmp/rl9.iso
