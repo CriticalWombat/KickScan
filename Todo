@@ -1,0 +1,7 @@
+Write a module that performs the following functions:
+    1. Find a password generator API and call it for a new root password
+    2. Pass this password into something like the following python to obtain a hash+salt of the password
+        A. 'import crypt,getpass;pw=getpass.getpass();print(crypt.crypt(pw) if (pw==getpass.getpass("Confirm: ")) else exit())'
+    3. Open ks.cfg for writing and pattern match "rootpw --iscrypted "
+    4. Write the encrypted password here and save the file
+    5. Display the unencrypted password in terminal for documentation and usage
