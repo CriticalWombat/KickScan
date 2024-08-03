@@ -78,3 +78,5 @@ automatically make user / password in greenbone for the interface and have it ma
 Fix banner
 
 Make user home directory and other file paths dynamic to the input or generated username
+
+Ensure versioning banners in bootloader match what is pulled from rocky.org in order to dynamically reflect the correct rockyOS version.
