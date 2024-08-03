@@ -21,6 +21,10 @@ error_exit() {
     exit 1
 }
 
+# Enter Main #
+echo ""
+echo ""
+
 if [ -f /etc/debian_version ]; then
     # Check and install required packages
     for PACKAGE in "${REQUIRED_PACKAGES[@]}"; do
