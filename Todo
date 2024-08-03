@@ -5,3 +5,14 @@ Write a module that performs the following functions:
     3. Open ks.cfg for writing and pattern match "rootpw --iscrypted "
     4. Write the encrypted password here and save the file
     5. Display the unencrypted password in terminal for documentation and usage
+
+Write a module that performs the following functions:
+    Prompt for hostname with timeout of ~20s
+    If input:
+        save to var
+    else if timeout
+        generate random 4 character and set hostname to "Scanner-{4characters here}
+        save to var
+    Open ks.cfg for writing and pattern match "network --bootproto=dhcp --hostname "
+        append var to end of string and save the file
+    
