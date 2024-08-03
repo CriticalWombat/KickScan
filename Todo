@@ -1,3 +1,5 @@
+Eventually write these modules together into the same process as the iso gen
+
 Write a module that performs the following functions:
     1. Find a password generator API and call it for a new root password
     2. Pass this password into something like the following python to obtain a hash+salt of the password
@@ -16,3 +18,59 @@ Write a module that performs the following functions:
     Open ks.cfg for writing and pattern match "network --bootproto=dhcp --hostname "
         append var to end of string and save the file
     
+Write a module that performs the following functions:
+    Prompt for username with timeout of ~20s
+    If input:
+        save to var
+    else if timeout
+        pull from a name api to generate a short unique username
+        print to console
+        save to var
+    Open config.sh for writing
+        pattern match /tmp/config.sh user
+        replace user with var
+    Open ks.cfg for writing
+        pattern match "user --name="
+        Append var after the equals sign
+
+Write a module that performs the following functions:
+    Prompt for y/n asking for ssh key config with timeout of ~20s
+    If n:
+        pass
+    If y:
+        ask for input of either github key or raw public key
+        if starts with pattern https: (indicating gh key)
+            Curl key and save to var
+        else:
+            save input to var
+        
+        /bin/echo -e '{var}' > /home/{userthatisinput}/.ssh/authorized_keys
+
+Write a module that performs the following functions:
+    Open ks.cfg and pattern match the following snippet so that the hostname and credentials can be written to /etc/issue for first time boot
+
+        ##### Update /etc/issue with first time logon info #####
+        cat << 'EOF' > /etc/issue
+        __  ___      _       _____                 
+        | |/ (_)    | |     / ____|                
+        | ' / _  ___| | __ | (___   ___ __ _ _ __  
+        |  < | |/ __| |/ /  \___ \ / __/ _` | '_ \ 
+        | . \| | (__|   <   ____) | (_| (_| | | | |
+        |_|\_\_|\___|_|\_\ |_____/ \___\__,_|_| |_|
+                                                    
+                                                    
+                                Welcome to KickScan
+
+        !!! Safely store the credentials below. This is the only time they will be visible. !!!
+
+        Hostname: HOSTNAME
+        IP Address: IP_ADDRESS
+        Root Password: ROOT_PASSWORD
+        User Name: USERNAME
+        User Password: USERPASSWORD
+
+        EOF
+        ##### Update /etc/issue with first time logon info #####
+
+automatically make user / password in greenbone for the interface and have it match the user/pass of the linux box
+    add "GreenBone Credentials are set to be the same as User Name and User Password." to the /etc/issue banner

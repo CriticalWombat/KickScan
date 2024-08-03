@@ -50,7 +50,8 @@ fi
 
 # Download the ISO file
 echo ""
-echo "Downloading iso from rockylinux.org"
+echo "Downloading iso from rockylinux.org..."
+echo ""
 curl -o /tmp/rl9.iso https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.4-x86_64-minimal.iso || error_exit "Failed to download ISO."
 echo ""
 
@@ -72,9 +73,9 @@ curl https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/iso-configs/i
 
 # Create the new ISO
 mkisofs -o /tmp/GreenBoneScanner.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J -v -T -V "Rocky-9-4-x86_64-dvd" /tmp/working_directory || error_exit "Failed to create ISO."
-
+echo ""
 echo "ISO creation successful. File saved as /tmp/GreenBoneScanner.iso"
-
+echo ""
 # Housekeeping
 rm -rf /tmp/iso
 rm -rf /tmp/working_directory

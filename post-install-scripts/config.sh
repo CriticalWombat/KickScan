@@ -2,7 +2,7 @@
 
 # user ops
 groupadd docker
-useradd -m nexigen
+#useradd -m nexigen Testing ks useradd function
 /bin/mkdir /home/nexigen/.ssh
 /bin/chmod 700 /home/nexigen/.ssh
 /bin/echo -e 'ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGtIefCNwnylwl1ZxT2WJ+BMJ+wCyj52A/HOkxDSxBxhEp6GCfMiqt6o5WijBhidQ4qpUwHeWdpr8KrRA1Hc5eM= ecdsa-key-20240731' > /home/nexigen/.ssh/authorized_keys
