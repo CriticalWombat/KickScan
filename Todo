@@ -76,3 +76,5 @@ automatically make user / password in greenbone for the interface and have it ma
     add "GreenBone Credentials are set to be the same as User Name and User Password." to the /etc/issue banner
 
 Fix banner
+
+Make user home directory and other file paths dynamic to the input or generated username
