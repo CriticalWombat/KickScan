@@ -74,3 +74,5 @@ Write a module that performs the following functions:
 
 automatically make user / password in greenbone for the interface and have it match the user/pass of the linux box
     add "GreenBone Credentials are set to be the same as User Name and User Password." to the /etc/issue banner
+
+Fix banner

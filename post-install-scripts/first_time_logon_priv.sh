@@ -1,3 +1,8 @@
+### Make this editable only by root so that abuse of this script is not accessible to already setup devices. ###
+chown root:root "$HOME/.first-logon-done"
+chmod 644 "$HOME/.first-logon-done"
+### Make this editable only by root so that abuse of this script is not accessible to already setup devices. ###
+
 ##### Update /etc/issue to remove first time logon info #####
 cat << 'EOF' > /etc/issue
 __  ___      _       _____                 
