@@ -69,9 +69,6 @@ mount -o loop /tmp/rl9.iso /tmp/iso || error_exit "Failed to mount ISO."
 # Synchronize files
 rsync -av /tmp/iso/ /tmp/working_directory || error_exit "Failed to synchronize files."
 
-# Unmount the ISO
-umount /tmp/iso || error_exit "Failed to unmount ISO."
-
 # Download the isolinux configuration file
 curl https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/iso-configs/isolinux.cfg > /tmp/working_directory/isolinux/isolinux.cfg || error_exit "Failed to download isolinux.cfg."
 
