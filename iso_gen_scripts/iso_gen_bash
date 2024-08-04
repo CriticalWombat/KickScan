@@ -8,7 +8,7 @@ REQUIRED_PACKAGES=("curl" "rsync" "genisoimage")
 # Function to handle cleanup on exit
 cleanup() {
     echo "Cleaning up..."
-    umount /tmp/iso || true
+    umount /tmp/iso
     rm -rf /tmp/iso
     rm -rf /tmp/working_directory
     rm -rf /tmp/rl9.iso
@@ -77,7 +77,3 @@ mkisofs -o /tmp/GreenBoneScanner.iso -b isolinux/isolinux.bin -c isolinux/boot.c
 echo ""
 echo "ISO creation successful. File saved as /tmp/GreenBoneScanner.iso"
 echo ""
-# Housekeeping
-rm -rf /tmp/iso
-rm -rf /tmp/working_directory
-rm -rf /tmp/rl9.iso
