@@ -1,8 +1,8 @@
 ### Configure and Start Docker Compose for GreenBone Scanner. ###
-
-mkdir /home/nexigen/greenbone
-curl -o /home/nexigen/greenbone/compose.yaml https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/yaml/compose.yaml
-docker compose -f /home/nexigen/greenbone/compose.yaml up -d
+composeDIR="/home/nexigen/greenbone"
+mkdir $composeDIR
+curl -o $composeDIR/compose.yaml https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/yaml/compose.yaml
+docker compose -f $composeDIR/compose.yaml up -d
 
 # Fetch the first IP address
 ip_address=$(hostname -I | awk '{print $1}')
@@ -46,6 +46,14 @@ done
 # If it reaches here, all attempts have failed
 echo ""
 echo "Failed to access GreenBone web interface after $max_attempts attempts."
-echo "Manual troubleshooting is required."
+echo ""
+echo ""
+echo "Manual troubleshooting is required..."
+echo ""
+echo "Docker Compose is located at $composeDIR/compose.yaml"
+echo ""
+docker ps 
+echo ""
+echo ""
 exit 1
 ### Configure and Start Docker Compose for GreenBone Scanner. ###
