@@ -29,7 +29,9 @@ check_greenbone() {
 while [ $attempt -le $max_attempts ]; do
     echo "Attempt $attempt of $max_attempts..."
     if check_greenbone; then
-        echo "Docker configurator has completed! Navigate to http://$ip_address:5555 in a web browser."
+        echo "GreenBone configuration has been completed! Navigate to http://$ip_address:5555 in a web browser."
+        echo ""
+        echo ""
         exit 0
     else
         echo "GreenBone web interface is not currently accessible at http://$ip_address:5555..."
@@ -42,6 +44,7 @@ while [ $attempt -le $max_attempts ]; do
 done
 
 # If it reaches here, all attempts have failed
+echo ""
 echo "Failed to access GreenBone web interface after $max_attempts attempts."
 echo "Manual troubleshooting is required."
 exit 1
