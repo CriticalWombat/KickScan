@@ -7,9 +7,11 @@ Write a module that performs the following functions:
     3. Open ks.cfg for writing and pattern match "rootpw --iscrypted "
     4. Write the encrypted password here and save the file
     5. Display the unencrypted password in terminal for documentation and usage
-
+### Functions for Guided setup ###
+### This will be another bootloader option so that it can be specified and not entirely automated.
+### Same logic for "no input" will apply immediately for automated setup
 Write a module that performs the following functions:
-    Prompt for hostname with timeout of ~20s
+    Prompt for hostname
     If input:
         save to var
     else if timeout
@@ -45,7 +47,7 @@ Write a module that performs the following functions:
             save input to var
         
         /bin/echo -e '{var}' > /home/{userthatisinput}/.ssh/authorized_keys
-
+### END Functions for Guided setup ###
 Write a module that performs the following functions:
     Open ks.cfg and pattern match the following snippet so that the hostname and credentials can be written to /etc/issue for first time boot
 
@@ -72,11 +74,14 @@ Write a module that performs the following functions:
         EOF
         ##### Update /etc/issue with first time logon info #####
 
-automatically make user / password in greenbone for the interface and have it match the user/pass of the linux box
-    add "GreenBone Credentials are set to be the same as User Name and User Password." to the /etc/issue banner
+Change web interface credential for greenbone in post in post install
+    Replace password with linux box password and display these on first time login through /etc/issue
+    docker compose -f $DOWNLOAD_DIR/docker-compose.yml exec -u gvmd gvmd gvmd --user=admin --new-password='<password>'
 
 Fix banner
 
 Make user home directory and other file paths dynamic to the input or generated username
 
 Ensure versioning banners in bootloader match what is pulled from rocky.org in order to dynamically reflect the correct rockyOS version.
+
+Add quickstart oneliner in README.md (curl, chmod, bash for generation)
