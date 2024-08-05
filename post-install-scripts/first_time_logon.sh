@@ -1,7 +1,7 @@
 ### Configure and Start Docker Compose for GreenBone Scanner. ###
 composeDIR="/home/nexigen/greenbone"
 mkdir $composeDIR
-curl -o $composeDIR/compose.yaml https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/yaml/compose.yaml
+curl --http1.1 -o $composeDIR/compose.yaml https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/yaml/compose.yaml
 docker compose -f $composeDIR/compose.yaml up -d
 
 # Fetch the first IP address
