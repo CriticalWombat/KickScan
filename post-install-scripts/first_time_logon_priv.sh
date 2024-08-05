@@ -26,3 +26,4 @@ EOF
 
 # Delete this script since setuid is set and allows user execution with root permission
 sudo rm -f -- "$0"
+
