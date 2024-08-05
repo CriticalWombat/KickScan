@@ -71,7 +71,7 @@ rsync -av /tmp/iso/ /tmp/working_directory || error_exit "Failed to synchronize 
 
 # Download the isolinux and grub configuration files
 curl https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/iso-configs/isolinux.cfg > /tmp/working_directory/isolinux/isolinux.cfg || error_exit "Failed to replace isolinux.cfg."
-curl https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/iso-configs/grub.cfg > /tmp/working_directory/EFI/BOOT/grub.cfg || error_exit "Failed to replace grub.cfg."
+#curl https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/iso-configs/grub.cfg > /tmp/working_directory/EFI/BOOT/grub.cfg || error_exit "Failed to replace grub.cfg."
 
 # Create the new ISO
 mkisofs -o /tmp/GreenBoneScanner.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J -v -T -V "Rocky-9-4-x86_64-dvd" /tmp/working_directory || error_exit "Failed to create ISO."
