@@ -2,19 +2,26 @@
 
 **KickScan** aims to provide a straightforward way to set up and manage physical deployments of GreenBone Vulnerability Management system using Docker. By leveraging Docker containers, KickScan ensures that the environment is consistent, isolated, and easy to maintain. The provided scripts handle everything from user and group creation to the installation and configuration of Docker and GreenBone.
 
+
 ## Table of Contents
 
+- [Features-in-Flight](#fif)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
-- [License](#license)
+
+## Features in Flight
+
+- Powershell ISO generation
+- Adding Podman alternative
+- Guided install option (Custom hostname/passwords etc...)
 
 ## Prerequisites
 
 Before you begin, ensure you have the following:
 
-- A Linux-based system or WSL to generate the custom ISO file
+- A RHEL or Debian based Linux system or equivalant WSL to generate the custom ISO file
 - Root or sudo access to the system or WSL
 - Internet connection for both your current Linux/WSL instance as well as your target device that you are installing the OS on.
 
@@ -67,8 +74,3 @@ These scripts are automatically executed during the installation process initiat
 ## Usage
 
 After the installation, you can access the GreenBone Vulnerability Management interface by navigating to `http://localhost:5555` of the target device that was deployed.
-
-
-## License
-
-This project is licensed under the MIT License.
