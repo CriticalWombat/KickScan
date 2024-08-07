@@ -7,72 +7,22 @@ Write a module that performs the following functions:
     3. Open ks.cfg for writing and pattern match "rootpw --iscrypted "
     4. Write the encrypted password here and save the file
     5. Display the unencrypted password in terminal for documentation and usage
+
 ### Functions for Guided setup ###
-### This will be another bootloader option so that it can be specified and not entirely automated.
-### Same logic for "no input" will apply immediately for automated setup
-Write a module that performs the following functions:
-    Prompt for hostname
-    If input:
-        save to var
-    else if timeout
-        generate random 4 character and set hostname to "Scanner-{4characters here}
-        save to var
-    Open ks.cfg for writing and pattern match "network --bootproto=dhcp --hostname "
-        append var to end of string and save the file
-    
-Write a module that performs the following functions:
-    Prompt for username with timeout of ~20s
-    If input:
-        save to var
-    else if timeout
-        pull from a name api to generate a short unique username
-        print to console
-        save to var
-    Open config.sh for writing
-        pattern match /tmp/config.sh user
-        replace user with var
-    Open ks.cfg for writing
-        pattern match "user --name="
-        Append var after the equals sign
+### This will be another bootloader option pointing to a different ks file.
+### This new ks file will have a different "include-files.sh" which will handle input for guided installation
 
 Write a module that performs the following functions:
-    Prompt for y/n asking for ssh key config with timeout of ~20s
-    If n:
-        pass
-    If y:
-        ask for input of either github key or raw public key
-        if starts with pattern https: (indicating gh key)
-            Curl key and save to var
-        else:
-            save input to var
-        
+    Prompt for hostname
+    Prompt for username
+    Prompt for password
+    Prompt for IP
+    Prompt for ssh key
+        parse raw vs https(github key) and add appropriately
         /bin/echo -e '{var}' > /home/{userthatisinput}/.ssh/authorized_keys
 ### END Functions for Guided setup ###
 Write a module that performs the following functions:
     Open ks.cfg and pattern match the following snippet so that the hostname and credentials can be written to /etc/issue for first time boot
-
-        ##### Update /etc/issue with first time logon info #####
-        cat << 'EOF' > /etc/issue
-        __  ___      _       _____                 
-        | |/ (_)    | |     / ____|                
-        | ' / _  ___| | __ | (___   ___ __ _ _ __  
-        |  < | |/ __| |/ /  \___ \ / __/ _` | '_ \ 
-        | . \| | (__|   <   ____) | (_| (_| | | | |
-        |_|\_\_|\___|_|\_\ |_____/ \___\__,_|_| |_|
-                                                    
-                                                    
-                                Welcome to KickScan
-
-        !!! Safely store the credentials below. This is the only time they will be visible. !!!
-
-        Hostname: HOSTNAME
-        IP Address: IP_ADDRESS
-        Root Password: ROOT_PASSWORD
-        User Name: USERNAME
-        User Password: USERPASSWORD
-
-        EOF
-        ##### Update /etc/issue with first time logon info #####
 
 Change web interface credential for greenbone in post in post install
     Replace password with linux box password and display these on first time login through /etc/issue
@@ -85,5 +35,3 @@ Make user home directory and other file paths dynamic to the input or generated 
 Ensure versioning banners in bootloader match what is pulled from rocky.org in order to dynamically reflect the correct rockyOS version.
 
 Add quickstart oneliner in README.md (curl, chmod, bash for generation)
-
-Add boot from local disk on grub.cfg
