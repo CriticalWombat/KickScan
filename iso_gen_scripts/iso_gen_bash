@@ -8,6 +8,7 @@ REQUIRED_PACKAGES=("curl" "rsync" "genisoimage")
 # Function to handle cleanup on exit
 cleanup() {
     echo "Cleaning up..."
+    cd /tmp  # Ensure current directory is not within /tmp/iso
     umount /tmp/iso
     rm -rf /tmp/iso
     rm -rf /tmp/working_directory
@@ -47,7 +48,7 @@ elif [ -f /etc/redhat-release ]; then
             fi
         done
 else
-    error_exit "Unknown OS"
+    echo "Unknown OS - Manually ensure that the following packages are installed: curl, rsync, and genisoimage"
 fi
 
 
