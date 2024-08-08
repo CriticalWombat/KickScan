@@ -9,7 +9,7 @@ json=$(curl https://usernameapiv1.vercel.app/api/random-usernames)
 # Extract username using grep and sed
 username=$(echo $json | grep -oP '"usernames":\["\K[^"]+')
 # Remove trailing underscore using bash parameter expansion
-clean_username=${username%_}
+clean_username=${$username%_}
 # Make password
 password=$(tr -dc 'A-Za-z0-9!?%=' < /dev/urandom | head -c 10)
 # Add to the include statement
