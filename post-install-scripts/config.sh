@@ -29,18 +29,18 @@ systemctl enable docker
 tee /etc/issue >> /dev/null << EOF
  
 
-#==============================================#
-
-# Welcome to KickScan
+#========================================================#
 # This information will not be visible after first login!
-
-# Hostname: $hostname
-# IP Address: $3
-
+#      ROOT LOGON IS LOCKED BY DEFAULT - USE SUDO!
+#                  Welcome to Bilge
+#
+#
 # User Name: $1
 # User Password: $2
-
-# ROOT LOGON IS LOCKED BY DEFAULT - USE SUDO!
-
-#==============================================#
+#
+# Hostname: $hostname
+# IP Address: $3
+#
+#
+#========================================================#
 EOF
