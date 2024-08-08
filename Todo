@@ -37,3 +37,7 @@ Ensure versioning banners in bootloader match what is pulled from rocky.org in o
 Add quickstart oneliner in README.md (curl, chmod, bash for generation)
 
 change directory stucture of all curls to match rename 
+
+Add a for loop to docker compose up -d each yaml in the yaml directory (This will also allow descriptive compose file names)
+
+Move greenbone interface health check script to post install scripts and call from firsttimelogon.sh
