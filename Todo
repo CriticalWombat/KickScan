@@ -35,3 +35,5 @@ Make user home directory and other file paths dynamic to the input or generated 
 Ensure versioning banners in bootloader match what is pulled from rocky.org in order to dynamically reflect the correct rockyOS version.
 
 Add quickstart oneliner in README.md (curl, chmod, bash for generation)
+
+change directory stucture of all curls to match rename 
