@@ -7,7 +7,6 @@ hostname=$(hostname)
 # Update /etc/issue with first time logon info
 tee /etc/issue >> /dev/null << EOF
  
-
 #========================================================#
 # This information will not be visible after first login!
 #      ROOT LOGON IS LOCKED BY DEFAULT - USE SUDO!

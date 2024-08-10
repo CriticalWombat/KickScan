@@ -32,7 +32,6 @@ mkdir $composeDIR
 curl --http1.1 -o $composeDIR/compose.yaml https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/yaml/compose.yaml
 docker compose -f $composeDIR/compose.yaml up -d
 
-
 # Clear the terminal screen
 clear
 
