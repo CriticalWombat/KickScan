@@ -13,11 +13,11 @@ tee /etc/issue >> /dev/null << EOF
 #                  Welcome to Bilge
 #
 #
-# User Name: $1
-# User Password: $2
+# User Name: "$1"
+# User Password: "$2"
 #
-# Hostname: $hostname
-# IP Address: $3
+# Hostname: "$hostname"
+# IP Address: "$3"
 #
 #
 #========================================================#
