@@ -28,15 +28,11 @@ Change web interface credential for greenbone in post in post install
     Replace password with linux box password and display these on first time login through /etc/issue
     docker compose -f $DOWNLOAD_DIR/docker-compose.yml exec -u gvmd gvmd gvmd --user=admin --new-password='<password>'
 
-Fix banner
-
-Make user home directory and other file paths dynamic to the input or generated username
+Fix banner to be dynamically aligned with text length on first logon
 
 Ensure versioning banners in bootloader match what is pulled from rocky.org in order to dynamically reflect the correct rockyOS version.
 
 Add quickstart oneliner in README.md (curl, chmod, bash for generation)
-
-change directory stucture of all curls to match rename 
 
 Add a for loop to docker compose up -d each yaml in the yaml directory (This will also allow descriptive compose file names)
 
