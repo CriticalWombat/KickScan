@@ -75,8 +75,6 @@ while [ $attempt -le $max_attempts ]; do
     fi
 done
 
-docker compose -f $composeDIR/compose.yml exec -u gvmd gvmd gvmd --user=admin --new-password=$2
-
 # If it reaches here, all attempts have failed
 echo ""
 echo "Failed to access GreenBone web interface after $max_attempts attempts."
@@ -91,6 +89,12 @@ echo ""
 echo ""
 exit 1
 ### Configure and Start Docker Compose for GreenBone Scanner. ###
+
+echo ""
+echo "Changing admin password for Greenbone interface to match your bilge password..."
+docker compose -f $composeDIR/compose.yaml exec -u gvmd gvmd gvmd --user=admin --new-password=$2
+echo ""
+echo "Done!"
 
 # Delete this script
 sudo rm -f -- "$0"

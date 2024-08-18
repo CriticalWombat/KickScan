@@ -33,7 +33,7 @@ Fix banner to be dynamically aligned with text length on first logon
 Fix IP on banner
 Fix quotes on banner
 
-remove bashrc first time logon check. especially now since creds are placed here.
+remove last 4 bashrc lines which are the first time logon check. especially now since creds are placed here.
 
 Add quickstart oneliner in README.md (curl, chmod, bash for generation)
 
