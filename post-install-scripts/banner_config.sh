@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# $1=username $2=password $3=IP
+# $1=username $2=password
 
 hostname=$(hostname)
+ip_address=$(hostname -I | awk '{print $1}')
 
 # Update /etc/issue with first time logon info
 tee /etc/issue >> /dev/null << EOF
@@ -16,14 +17,14 @@ tee /etc/issue >> /dev/null << EOF
  |   |                                                                   |   | 
  |   |                                                                   |   |
  |   |          ███████████   ███  ████                                  |   |
- |   |          ░░███░░░░░███ ░░░  ░░███                                 |   |
+ |   |         ░░███░░░░░███ ░░░  ░░███                                  |   |
  |   |          ░███    ░███ ████  ░███   ███████  ██████                |   |
  |   |          ░██████████ ░░███  ░███  ███░░███ ███░░███               |   |
  |   |          ░███░░░░░███ ░███  ░███ ░███ ░███░███████                |   |
  |   |          ░███    ░███ ░███  ░███ ░███ ░███░███░░░                 |   |
  |   |          ███████████  █████ █████░░███████░░██████                |   |
  |   |          ░░░░░░░░░░░  ░░░░░ ░░░░░  ░░░░░███ ░░░░░░                |   |
- |   |                                      ███ ░███                     |   |
+ |   |                                    ███ ░███                       |   |
  |   |                                  ░░██████                         |   |
  |   |                                      ░░░░░░                       |   |
  |   |                                                                   |   |
@@ -31,10 +32,10 @@ tee /etc/issue >> /dev/null << EOF
  |   |           ROOT LOGON IS LOCKED BY DEFAULT - USE SUDO!             |   |
  |   |                        Welcome to Bilge!                          |   |
  |   |                                                                   |___|
- |   |      User Name: "$1"
- |   |      User Password: "$2"
- |   |      Hostname: "$hostname"
- |   |      IP Address: "$3"
+ |   |      User Name: $1
+ |   |      User Password: $2
+ |   |      Hostname: $hostname
+ |   |      IP Address: $ip_address
  |   |                                                                   |---|
  |   |                                                                   |   |
  |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 

@@ -1,4 +1,4 @@
-# $1=user $2=ip_address
+# $1=user $2=password
 
 ### Make the first time flag editable only by root so that abuse of this script is not accessible to already setup devices. ###
 if [ -f "/home/$1/.first-logon-done" ]; then
@@ -31,9 +31,9 @@ sudo tee /etc/issue > /dev/null << 'EOF'
 
 
 EOF
-##### Update /etc/issue to remove first time logon info #####
 
 ### Configure and Start Docker Compose for GreenBone Scanner. ###
+ip_address=$(hostname -I | awk '{print $1}')
 composeDIR="/home/$1/composeFiles"
 mkdir $composeDIR
 curl --http1.1 -o $composeDIR/compose.yaml https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/yaml/compose.yaml
@@ -43,7 +43,7 @@ docker compose -f $composeDIR/compose.yaml up -d
 clear
 
 # Inform the user about the test
-echo "Testing for GreenBone web interface at http://$2:5555..."
+echo "Testing for GreenBone web interface at http://$ip_address:5555..."
 echo ""
 
 # Initialize attempt counter
@@ -53,7 +53,7 @@ sleep_duration=5
 
 # Function to check GreenBone web interface accessibility
 check_greenbone() {
-    curl -s --head --request GET "http://$2:5555" | grep "200 OK" > /dev/null
+    curl -s --head --request GET "http://$ip_address:5555" | grep "200 OK" > /dev/null
     return $?
 }
 
@@ -61,12 +61,12 @@ check_greenbone() {
 while [ $attempt -le $max_attempts ]; do
     echo "Attempt $attempt of $max_attempts..."
     if check_greenbone; then
-        echo "GreenBone configuration has been completed! Navigate to http://$2:5555 in a web browser."
+        echo "GreenBone configuration has been completed! Navigate to http://$ip_address:5555 in a web browser."
         echo ""
         echo ""
         exit 0
     else
-        echo "GreenBone web interface is not currently accessible at http://$2:5555..."
+        echo "GreenBone web interface is not currently accessible at http://$ip_address:5555..."
         attempt=$((attempt+1))
         if [ $attempt -le $max_attempts ]; then
             echo "Retrying in $sleep_duration seconds..."
@@ -74,6 +74,8 @@ while [ $attempt -le $max_attempts ]; do
         fi
     fi
 done
+
+docker compose -f $composeDIR/compose.yml exec -u gvmd gvmd gvmd --user=admin --new-password=$2
 
 # If it reaches here, all attempts have failed
 echo ""

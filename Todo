@@ -28,9 +28,12 @@ Change web interface credential for greenbone in post in post install
     Replace password with linux box password and display these on first time login through /etc/issue
     docker compose -f $DOWNLOAD_DIR/docker-compose.yml exec -u gvmd gvmd gvmd --user=admin --new-password='<password>'
 
-Fix banner to be dynamically aligned with text length on first logon
 
-Ensure versioning banners in bootloader match what is pulled from rocky.org in order to dynamically reflect the correct rockyOS version.
+Fix banner to be dynamically aligned with text length on first logon
+Fix IP on banner
+Fix quotes on banner
+
+remove bashrc first time logon check. especially now since creds are placed here.
 
 Add quickstart oneliner in README.md (curl, chmod, bash for generation)
 

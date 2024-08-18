@@ -8,13 +8,3 @@ chown -R "$1":"$1" /home/"$1"/.ssh
 chmod 0400 /home/"$1"/.ssh/*
 echo "$1        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers.d/"$1"
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
-
-
-# package ops
-yum update -y
-yum install -y sudo yum-utils vim
-yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-yum clean all
-
-systemctl enable docker
