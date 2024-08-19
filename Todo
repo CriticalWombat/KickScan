@@ -21,25 +21,14 @@ Write a module that performs the following functions:
         parse raw vs https(github key) and add appropriately
         /bin/echo -e '{var}' > /home/{userthatisinput}/.ssh/authorized_keys
 ### END Functions for Guided setup ###
-Write a module that performs the following functions:
-    Open ks.cfg and pattern match the following snippet so that the hostname and credentials can be written to /etc/issue for first time boot
-
-Change web interface credential for greenbone in post in post install
-    Replace password with linux box password and display these on first time login through /etc/issue
-    docker compose -f $DOWNLOAD_DIR/docker-compose.yml exec -u gvmd gvmd gvmd --user=admin --new-password='<password>'
-
 
 Fix banner to be dynamically aligned with text length on first logon
-Fix IP on banner
-Fix quotes on banner
 
 Create a post install script that runs to clean up all sensitive info. (bashrc, tmp, banner, etc...)
 
 Add quickstart oneliner in README.md (curl, chmod, bash for generation)
 
 Add a for loop to docker compose up -d each yaml in the yaml directory (This will also allow descriptive compose file names)
-
-Move greenbone interface health check script to post install scripts and call from firsttimelogon.sh
 
 Add support for wireless connectivity
 
