@@ -24,8 +24,6 @@ Write a module that performs the following functions:
 
 Fix banner to be dynamically aligned with text length on first logon
 
-Create a post install script that runs to clean up all sensitive info. (bashrc, tmp, banner, etc...)
-
 Add quickstart oneliner in README.md (curl, chmod, bash for generation)
 
 Add a for loop to docker compose up -d each yaml in the yaml directory (This will also allow descriptive compose file names)
