@@ -31,7 +31,7 @@ To install and set up KickScan, follow these steps:
 1. **Download the `iso_gen_bash` script**:
 
     ```bash
-    curl -o iso_gen_bash https://raw.githubusercontent.com/CriticalWombat/KickScan/main/iso_gen_bash
+    curl -o iso_gen_bash https://raw.githubusercontent.com/CriticalWombat/KickScan/refs/heads/MinimalGreenBone/iso_gen_scripts/iso_gen_bash
     chmod +x iso_gen_bash
     ```
 
