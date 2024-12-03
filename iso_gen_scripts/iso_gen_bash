@@ -57,7 +57,7 @@ fi
 echo ""
 echo "Downloading iso from rockylinux.org..."
 echo ""
-curl --http1.1 -o /tmp/rl9.iso https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.4-x86_64-minimal.iso || error_exit "Failed to download ISO."
+curl --http1.1 -o /tmp/rl9.iso https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9-latest-x86_64-minimal.iso || error_exit "Failed to download ISO."
 echo ""
 
 # Create directories
