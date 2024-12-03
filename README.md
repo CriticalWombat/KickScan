@@ -36,10 +36,11 @@ To install and set up KickScan, follow these steps:
     ```
 
 2. **Run the `iso_gen_bash` script**:
-    This script generates an ISO file for the KickScan installation.
+    This script generates an ISO file for the KickScan installation. 
+    !! Run as sudo !!
 
     ```bash
-    ./iso_gen_bash
+    sudo ./iso_gen_bash
     ```
 
 3. **Use the generated ISO**:
