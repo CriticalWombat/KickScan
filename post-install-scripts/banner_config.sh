@@ -30,15 +30,13 @@ tee /etc/issue >> /dev/null << EOF
  |   |                                                                   |   |
  |   |      This information will not be visible after first login!      |   |
  |   |           ROOT LOGON IS LOCKED BY DEFAULT - USE SUDO!             |   |
- |   |                        Welcome to Bilge!                          |   |
- |   |                                                                   |___|
- |   |      User Name: $1
- |   |      User Password: $2
- |   |      Hostname: $hostname
- |   |      IP Address: $ip_address
- |   |                                                                   |---|
+ |   |                                                                   |   |
  |   |                                                                   |   |
  |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
 (_____)                                                                 (_____)
 
+User Name: $1
+User Password: $2
+Hostname: $hostname
+IP Address: $ip_address
 EOF

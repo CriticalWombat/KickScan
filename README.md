@@ -5,7 +5,6 @@
 
 ## Table of Contents
 
-- [Features-in-Flight](#fif)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -47,19 +46,13 @@ To install and set up KickScan, follow these steps:
     Boot the generated ISO on the target system. The ISO will handle the installation process using the provided Kickstart configuration and Docker setup scripts.
 
 4. **Log into root and set the non-root account password**:
-    Once a login prompt is available, login to the root account and set a password for the non-root account.
+    Once a login prompt is available, document the login credentials supplied and login. Change the password if desired.
     ```bash
     passwd useraccountnamehere
     ``` 
 
-5. **Log into the user account**:
-    Either log out of the root account or switch users to the non-root account.
-    ```bash
-    su useraccountnamehere
-    ```
-
-6. **First time logon script will handle the setup and configuration of Docker and Greenbone.**:
-    Simply wait for the script to complete and you will be presented with messsage indicating where your web interface can be reached.
+6. **First time logon script will handle the setup of Docker and Greenbone.**:
+    Simply wait for the script to complete and you will be presented with messsage indicating where your web interface can be reached. If errors occur in setup, a shell will be returned to you for troubleshooting.
 
 ## Configuration
 
@@ -73,4 +66,4 @@ These scripts are automatically executed during the installation process initiat
 
 ## Usage
 
-After the installation, you can access the GreenBone Vulnerability Management interface by navigating to `http://localhost:5555` of the target device that was deployed.
+After the installation, you can access the GreenBone Vulnerability Management interface by navigating to the url displayed by the startup script once it is complete. This will be equivelant to http://localhost:5555.
