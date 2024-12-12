@@ -65,7 +65,7 @@ mkdir -p /tmp/iso || error_exit "Failed to create /tmp/iso directory."
 mkdir -p /tmp/working_directory || error_exit "Failed to create /tmp/working_directory directory."
 
 # Mount the ISO
-mount -o loop /tmp/rl9.iso /tmp/iso || error_exit "Failed to mount ISO."
+mount -o rw,loop /tmp/rl9.iso /tmp/iso || error_exit "Failed to mount ISO."
 
 # Synchronize files
 rsync -av /tmp/iso/ /tmp/working_directory || error_exit "Failed to synchronize files."
