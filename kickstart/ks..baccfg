@@ -26,20 +26,19 @@ repo --name="CRB" --baseurl=http://dl.rockylinux.org/pub/rocky/9/CRB/\$basearch/
 repo --name="extras" --baseurl=http://dl.rockylinux.org/pub/rocky/9/extras/\$basearch/os --cost=200
 
 %pre --interpreter=/bin/bash
-yum install -y words
-
-HOSTNAME_PREFIX="Scanner"
+HOSTNAME_PREFIX="GreenBone"
 ID=$(cat /proc/sys/kernel/random/uuid | cut -d "-" -f 3)
 HOSTNAME="${HOSTNAME_PREFIX}-${ID}"
 echo "network --bootproto=dhcp --hostname=${HOSTNAME}" > /tmp/host-include.ks
 
-WORDLIST="/usr/share/dict/words"
-if [ -f "$WORDLIST" ]; then
-    word1=$(shuf -n 1 $WORDLIST | tr -d '[:space:]')
-    word2=$(shuf -n 1 $WORDLIST | tr -d '[:space:]')
-    username="${word1}_${word2}_${ID}"
+URL="https://usernameapiv1.vercel.app/api/random-usernames"
+response=$(curl -s -w "%{http_code}" -o /tmp/username.json $URL)
+if [ "${response: -3}" == "200" ]; then
+    json=$(cat /tmp/username.json)
+    unfiltered_username=$(echo "$json" | grep -oP '"usernames":\["\K[^"]+')
+    username=${unfiltered_username%_}
 else
-    username="scanner-${ID}"
+    username="Greenbone-${ID}"
 fi
 password=$(tr -dc 'A-Za-z0-9!?%=' < /dev/urandom | head -c 10)
 echo "${username}" > /tmp/username
@@ -66,26 +65,31 @@ password=$(cat /tmp/password)
 chroot /mnt/sysimage /bin/bash <<EOF
 authselect select minimal --force
 
-### Configure first login banner with credentials
-cat <<BANNER > /etc/motd
-Welcome to your new system!
+bilgeSource="https://raw.githubusercontent.com/CriticalWombat/KickScan/MinimalGreenBone"
+postInstallScripts=("banner_config.sh" "user_config.sh" "package_ops.sh" "housekeeping.sh" "packageManager.sh")
+destinationDir="/tmp"
 
-Generated credentials:
-Username: ${username}
-Password: ${password}
+for script in "${postInstallScripts[@]}"; do
+    # Download the script
+    curl --http1.1 -o "${destinationDir}/${script}" "${bilgeSource}/post-install-scripts/${script}"
+    # Make it executable
+    chmod +x "${destinationDir}/${script}"
+    # Make user the owner of all post install scripts
+    chown "${username}":"${username}" "${destinationDir}/${script}"
+done
 
-Please change your password upon first login.
-BANNER
+### Execute post installation scripts.
+# Configure banner with first time logon credentials
+"${destinationDir}/banner_config.sh" "${username}" "${password}"
+# Configure user options (Groups, permissions, ssh keys, etc..)
+"${destinationDir}/user_config.sh" "${username}"
+# Install any necessary packages
+"${destinationDir}/package_ops.sh"
+# Move script out of tmp to wait for user first time logon to be triggered via bashrc.
+mv "${destinationDir}/housekeeping.sh" /usr/local/bin/housekeeping.sh
 
-# Create script to clear the MOTD after first login
-cat <<'CLEAR_SCRIPT' > /etc/profile.d/clear_motd.sh
-#!/bin/bash
-if [ -f /etc/motd ]; then
-    rm -f /etc/motd
-    rm -f /etc/profile.d/clear_motd.sh
-fi
-CLEAR_SCRIPT
-chmod +x /etc/profile.d/clear_motd.sh
+### Call packageManager.sh which will be the future package handler. This will be what reflects inputs of desired bilgetools into the selections and run commands for each.
+"${destinationDir}/packageManager.sh"
 
 # Suppress kernel messages to console
 echo 'kernel.printk = 3 4 1 3' >> /etc/sysctl.conf
@@ -97,3 +101,4 @@ reboot
 EOF
 
 %end
+

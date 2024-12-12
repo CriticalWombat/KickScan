@@ -1,10 +1,35 @@
 ### Configure and Start Docker Compose for GreenBone Scanner. ###
+
+# Get the primary IP address of the host
 ip_address=$(hostname -I | awk '{print $1}')
-composeDIR="/home/$1/composeFiles"
+
+# Get the username of the logged-in user
+username=$(whoami)
+
+# Define variables for the compose directory and file
+composeDIR="/home/$username/composeFiles"
 composefile="GreenBoneScanner.yaml"
-mkdir $composeDIR
+
+# Create the compose directory
+mkdir -p $composeDIR
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to create directory $composeDIR."
+    exit 1
+fi
+
+# Download the Docker Compose YAML file
 curl --http1.1 -o $composeDIR/$composefile https://raw.githubusercontent.com/CriticalWombat/KickScan/dev/yaml/$composefile
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to download Docker Compose file from the specified URL."
+    exit 1
+fi
+
+# Start Docker Compose
 docker compose -f $composeDIR/$composefile up -d
+if [ $? -ne 0 ]; then
+    echo "Error: Docker Compose failed to start."
+    exit 1
+fi
 
 # Clear the terminal screen
 clear
@@ -29,8 +54,14 @@ while [ $attempt -le $max_attempts ]; do
     echo "Attempt $attempt of $max_attempts..."
     if check_greenbone; then
         echo ""
-        echo "Changing admin password for Greenbone interface to match your bilge password..."
-        docker compose -f $composeDIR/$composefile exec -u gvmd gvmd gvmd --user=admin --new-password=$2
+        echo "Generating a random password for Greenbone interface..."
+        random_password=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 10)
+        echo "Generated password: $random_password"
+        docker compose -f $composeDIR/$composefile exec -u gvmd gvmd gvmd --user=admin --new-password="$random_password"
+        if [ $? -ne 0 ]; then
+            echo "Error: Failed to change the admin password."
+            exit 1
+        fi
         echo ""
         echo "Done!"
         echo ""
@@ -44,12 +75,12 @@ while [ $attempt -le $max_attempts ]; do
             sleep $sleep_duration
         fi
     fi
+
 done
 
 # If it reaches here, all attempts have failed
 echo ""
 echo "Failed to access GreenBone web interface after $max_attempts attempts."
-echo ""
 echo ""
 echo "Manual troubleshooting is required..."
 echo ""
