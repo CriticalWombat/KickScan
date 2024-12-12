@@ -1,4 +1,5 @@
 #!/bin/bash
+#TODO: add docker user group 
 
 # Function to log messages
 log() {
