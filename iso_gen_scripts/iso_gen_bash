@@ -12,7 +12,7 @@ cleanup() {
     umount /tmp/iso
     rm -rf /tmp/iso
     rm -rf /tmp/working_directory
-    rm -rf /tmp/rl9.iso
+    # rm -rf /tmp/rl9.iso
 }
 trap cleanup EXIT
 
@@ -27,7 +27,7 @@ echo ""
 echo ""
 
 if [ -f /etc/debian_version ]; then
-    # Check and install required packages 
+    # Check and install required packages
     for PACKAGE in "${REQUIRED_PACKAGES[@]}"; do
         if ! dpkg -s $PACKAGE &> /dev/null; then
             echo "$PACKAGE not found. Installing..."
@@ -54,29 +54,26 @@ fi
 
 
 # Download the ISO file
-echo ""
-echo "Downloading iso from rockylinux.org..."
-echo ""
-curl --http1.1 -o /tmp/rl9.iso https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9-latest-x86_64-minimal.iso || error_exit "Failed to download ISO."
-echo ""
+if [[ -f /tmp/rl9.iso ]]; then
+    echo "ISO file already exists at /tmp/rl9.iso. Skipping download."
+else
+    echo "Downloading ISO from rockylinux.org..."
+    curl --http1.1 -o /tmp/rl9.iso https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9-latest-x86_64-minimal.iso || error_exit "Failed to download ISO."
+fi
 
 # Create directories
 mkdir -p /tmp/iso || error_exit "Failed to create /tmp/iso directory."
 mkdir -p /tmp/working_directory || error_exit "Failed to create /tmp/working_directory directory."
 
-# Ensure the ISO is writeable at a FS level
-chmod -R a+w /tmp/rl9.ios
-chmod -R a+w /tmp/working_directory
-
 # Mount the ISO
-mount -o rw,loop /tmp/rl9.iso /tmp/iso || error_exit "Failed to mount ISO."
+mount -o loop /tmp/rl9.iso /tmp/iso || error_exit "Failed to mount ISO."
 
 # Synchronize files
 rsync -av /tmp/iso/ /tmp/working_directory || error_exit "Failed to synchronize files."
 
 # Download the isolinux and grub configuration files
-curl --http1.1 https://raw.githubusercontent.com/CriticalWombat/KickScan/refs/heads/MinimalGreenBone/iso-configs/grub.cfg > /tmp/working_directory/isolinux/isolinux.cfg || error_exit "Failed to replace isolinux.cfg."
-curl --http1.1 https://raw.githubusercontent.com/CriticalWombat/KickScan/refs/heads/MinimalGreenBone/iso-configs/isolinux.cfg > /tmp/working_directory/EFI/BOOT/grub.cfg || error_exit "Failed to replace grub.cfg."
+curl --http1.1 https://raw.githubusercontent.com/CriticalWombat/KickScan/refs/heads/MinimalGreenBone/iso-configs/isolinux.cfg > /tmp/working_directory/isolinux/isolinux.cfg || error_exit "Failed to replace isolinux.cfg."
+curl --http1.1 https://raw.githubusercontent.com/CriticalWombat/KickScan/refs/heads/MinimalGreenBone/iso-configs/grub.cfg > /tmp/working_directory/EFI/BOOT/grub.cfg || error_exit "Failed to replace grub.cfg."
 
 # Create the new ISO
 mkisofs -o /tmp/Bilge.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J -v -T -V "Rocky-9-4-x86_64-dvd" /tmp/working_directory || error_exit "Failed to create ISO."
