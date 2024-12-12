@@ -27,7 +27,7 @@ echo ""
 echo ""
 
 if [ -f /etc/debian_version ]; then
-    # Check and install required packages
+    # Check and install required packages 
     for PACKAGE in "${REQUIRED_PACKAGES[@]}"; do
         if ! dpkg -s $PACKAGE &> /dev/null; then
             echo "$PACKAGE not found. Installing..."
@@ -63,6 +63,10 @@ echo ""
 # Create directories
 mkdir -p /tmp/iso || error_exit "Failed to create /tmp/iso directory."
 mkdir -p /tmp/working_directory || error_exit "Failed to create /tmp/working_directory directory."
+
+# Ensure the ISO is writeable at a FS level
+chmod -R a+w /tmp/rl9.ios
+chmod -R a+w /tmp/working_directory
 
 # Mount the ISO
 mount -o rw,loop /tmp/rl9.iso /tmp/iso || error_exit "Failed to mount ISO."
