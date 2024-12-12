@@ -83,7 +83,7 @@ if [ -f /etc/os-release ]; then
     source /etc/os-release
     if [[ "$ID" =~ ^(ubuntu|kali)$ ]]; then
         install_docker_ubuntu
-    elif [[ "$ID" == "centos|rocky" ]]; then
+    elif [[ "$ID" =~ ^(centos|rocky)$ ]]; then
         install_docker_centos
     else
         log "Unsupported operating system: $ID"
