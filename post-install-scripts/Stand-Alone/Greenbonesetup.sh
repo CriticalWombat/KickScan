@@ -1,5 +1,8 @@
 ### Configure and Start Docker Compose for GreenBone Scanner. ###
 
+#TODO: add wait time before changing interface password
+#TODO: Incorporate log level changes for openvas 
+
 # Get the primary IP address of the host
 ip_address=$(hostname -I | awk '{print $1}')
 
