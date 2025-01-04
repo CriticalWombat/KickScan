@@ -36,7 +36,7 @@ install_docker_ubuntu() {
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
     log "Setting up Docker repository."
-    echo \"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $CODENAME stable\" | \
+    echo deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $CODENAME stable | \
         sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
     log "Updating package index again."
